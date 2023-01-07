@@ -1,5 +1,5 @@
 const Config = {
-  baseApiUrl: "https://localhost:4000",
+  baseApiUrl: "https://api.codefest.com/hbapi",
 };
 
 const currencyFormatter = Intl.NumberFormat("en-US", {

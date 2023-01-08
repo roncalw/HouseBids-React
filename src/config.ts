@@ -1,5 +1,7 @@
+const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
+
 const Config = {
-  baseApiUrl: "https://api.codefest.com/hbapi",
+  baseApiUrl: BASE_API_URL,
 };
 
 const currencyFormatter = Intl.NumberFormat("en-US", {

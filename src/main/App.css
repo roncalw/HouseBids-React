@@ -6,7 +6,7 @@
 .subtitle {
   font-style: italic;
   font-size: x-large;
-  color: coral;
+  color: rgb(38, 12, 2);
 }
 
 .themeFontColor {
@@ -15,4 +15,8 @@
 
 tr {
   cursor: pointer;
+}
+
+.frameClass {
+  height: 80vh;
 }

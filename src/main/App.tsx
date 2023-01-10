@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
     <div className="container">
-      <Header subtitle="Providing houses all over the freakin world!!"></Header>
+      <Header subtitle="CodeFest Proof of Concept"></Header>
       <Routes>
         <Route path="/" element={<HouseList/>}></Route>
         <Route path="/house/:id" element={<HouseDetail/>}></Route>

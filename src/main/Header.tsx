@@ -13,8 +13,9 @@ const Header = ({ subtitle }: Args) => {
         <img src={logo} className="logo" alt="logo" />
       </Link>
       </div>
-      <div className="col-7 mt-5 subtitle">
-        {subtitle}<br/> 
+      <div className="col-7 mt-5">
+        <span className="subtitle"> {subtitle}</span><br/> 
+        React app that shows a list of houses; click to edit or to add a bid.<br/>
         Click 
         <Link to={`/reactdoc`}>
          here

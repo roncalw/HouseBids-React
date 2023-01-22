@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_local:
+    runs-on: self-hosted
+
+    steps: 
+    - name: Prepare local folders
+      run: |
+        Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren c:\pub\hbreact hbreact_bak
+        md c:\pub\hbreact
+    
+    - name: Download new build to the local app
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: HouseBids-React-buildArtifact
+        path: c:\pub\hbreact

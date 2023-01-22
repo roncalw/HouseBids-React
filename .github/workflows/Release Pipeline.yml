@@ -12,9 +12,13 @@ jobs:
         Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
         ren c:\pub\hbreact hbreact_bak
         md c:\pub\hbreact
-    
-    - name: Download new build to the local app
-      uses: actions/download-artifact@v3.0.2
+
+    - name: Download artifact
+      id: download-artifact
+      uses: dawidd6/action-download-artifact@v2
       with:
+        workflow: Buid Pipline.ynl
         name: build
         path: c:\pub\hbreact
+        
+        

@@ -17,7 +17,7 @@ jobs:
       id: download-artifact
       uses: dawidd6/action-download-artifact@v2
       with:
-        workflow: Buid Pipline.yml
+        workflow: BuildPipline.yml
         name: build
         path: c:\pub\hbreact
         

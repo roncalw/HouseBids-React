@@ -18,7 +18,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: BuildPipline.yml
-        name: build
+        name: HouseBids-React-buildArtifact
         path: c:\pub\hbreact
         
         

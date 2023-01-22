@@ -16,5 +16,5 @@ jobs:
     - name: Download new build to the local app
       uses: actions/download-artifact@v3.0.2
       with:
-        name: HouseBids-React-buildArtifact
+        name: build
         path: c:\pub\hbreact

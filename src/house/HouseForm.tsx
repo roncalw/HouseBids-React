@@ -84,7 +84,7 @@ return (
             />
         </div>
         <div className="mt-2">
-            <img src={houseState.photo}></img>
+            <img alt="House Photo" src={houseState.photo}></img>
         </div>
         <button
         className="btn btn-primary mt-2"

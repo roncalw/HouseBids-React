@@ -19,5 +19,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm run build
+      - run: npm run build      
+      - name: Share artifact inside workflow
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: HouseBids-React-buildArtifact
+          path: build
       

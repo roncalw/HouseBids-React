@@ -8,7 +8,7 @@ jobs:
     steps: 
     - name: Prepare local folders
       run: |
-        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+        Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine
         Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
         Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
         ren c:\pub\hbreact hbreact_bak

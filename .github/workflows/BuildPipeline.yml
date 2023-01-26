@@ -11,14 +11,21 @@ jobs:
         node-version: [16.16.0]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Download Code from Repository
+        uses: actions/checkout@v3
+      
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run build      
-      - name: Share artifact inside workflow
+          
+      - name: Install NPM to Run Build
+        run: npm install
+      
+      - name: Run NPM Build
+        run: npm run build
+      
+      - name: Share Artifact Inside Workflow
         uses: actions/upload-artifact@v3.1.2
         with:
           name: HouseBids-React-buildArtifact

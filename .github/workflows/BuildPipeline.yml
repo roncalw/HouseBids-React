@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           
-      - name: Install NPM to Run Build
+      - name: Install NPM for Build
         run: npm install
       
       - name: Run NPM Build

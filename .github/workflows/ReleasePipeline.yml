@@ -23,7 +23,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: BuildPipeline.yml
-        name: HouseBids-React-buildArtifact
+        name: artifacts
         path: c:\pub\hbreact
 
     - name: Start Website
@@ -52,7 +52,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: BuildPipeline.yml
-        name: HouseBids-React-buildArtifact
+        name: artifacts
         path: c:\pub\hbreact
 
     - name: Start Website

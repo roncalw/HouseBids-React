@@ -9,9 +9,9 @@ const Header = ({ subtitle }: Args) => {
   return (
     <header className="row mb-4">
       <div className="col-5">
-      <Link to={`/`}>
+      <a href='https://www.codefest.com'>
         <img src={logo} className="logo" alt="logo" />
-      </Link>
+      </a>
       </div>
       <div className="col-7 mt-5">
         <span className="subtitle"> {subtitle}</span><br/> 

@@ -93,6 +93,14 @@ return (
         >
         Submit
         </button>
+        <span
+            className="btn btn-secondary mt-2"
+            onClick={() => {
+            window.history.back();
+            }}
+        >
+            Cancel
+        </span>
     </form>
     );
 

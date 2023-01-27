@@ -47,6 +47,16 @@ const HouseDetail = () => {
               Delete
             </button>
           </div>
+          <div className="col-2">
+            <span
+              className="btn btn-secondary w-100"
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              Cancel
+            </span>
+          </div>
         </div>
       </div>
       <div className="col-6">

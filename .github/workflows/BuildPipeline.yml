@@ -32,6 +32,6 @@ jobs:
       - name: Share Artifact Inside Workflow
         uses: actions/upload-artifact@v3.1.2
         with:
-          name: HouseBids-React-buildArtifact
+          name: artifacts
           path: build
       

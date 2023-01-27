@@ -3,7 +3,7 @@ on:
 
 jobs:
   deploy_local:
-    runs-on: self-hosted
+    runs-on: hpzbookg9
 
     steps: 
     - name: Stop Website
@@ -30,7 +30,7 @@ jobs:
         
   deploy_remote:
     needs: deploy_local
-    runs-on: self-hosted
+    runs-on: win2019dc03
     environment:
       name:IIS_Environment.Prod
 

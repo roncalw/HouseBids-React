@@ -6,6 +6,9 @@ jobs:
     runs-on: self-hosted
 
     steps: 
+    - name: Stop Website
+      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
+
     - name: Prepare local folders
       run: |       
         Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
@@ -20,5 +23,35 @@ jobs:
         workflow: BuildPipeline.yml
         name: HouseBids-React-buildArtifact
         path: c:\pub\hbreact
+
+    - name: Start Website
+      run: Start-IISSite -Name "HouseBids Website"
+
         
-        
+  deploy_remote:
+    needs: deploy_local
+    runs-on: self-hosted
+    environment:
+      name:IIS_Environment.Prod
+
+    steps: 
+    - name: Stop Website
+      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
+
+    - name: Prepare local folders
+      run: |       
+        Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren c:\pub\hbreact hbreact_bak
+        md c:\pub\hbreact
+
+    - name: Download artifact
+      id: download-artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: BuildPipeline.yml
+        name: HouseBids-React-buildArtifact
+        path: c:\pub\hbreact
+
+    - name: Start Website
+      run: Start-IISSite -Name "HouseBids Website"

@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy_local:
-    runs-on: hpzbookg9
+    runs-on: self-hosted
 
     steps: 
     - name: Stop Website
@@ -19,11 +19,9 @@ jobs:
         md c:\pub\hbreact
 
     - name: Download artifact
-      id: download-artifact
-      uses: dawidd6/action-download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
-        workflow: BuildPipeline.yml
-        name: artifacts
+        name: hbreact
         path: c:\pub\hbreact
 
     - name: Start Website
@@ -32,7 +30,7 @@ jobs:
         
   deploy_remote:
     needs: deploy_local
-    runs-on: win2019dc03
+    runs-on: self-hosted
     environment:
       name: IIS_Environment.Prod
 
@@ -42,18 +40,17 @@ jobs:
 
     - name: Prepare local folders
       run: |       
-        Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
-        Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
-        ren c:\pub\hbreact hbreact_bak
-        md c:\pub\hbreact
+        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren \\WIN2019DC03\c$\pub\hbreact hbreact_bak
+        md \\WIN2019DC03\c$\pub\hbreact
 
     - name: Download artifact
-      id: download-artifact
-      uses: dawidd6/action-download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
-        workflow: BuildPipeline.yml
-        name: artifacts
-        path: c:\pub\hbreact
+        name: hbreact
+        path: \\WIN2019DC03\c$\pub\hbreact
 
     - name: Start Website
       run: Start-IISSite -Name "HouseBids Website"
+ 

@@ -9,6 +9,7 @@ jobs:
 
     steps: 
     - name: Stop Website
+      shell: pwsh
       run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
 
     - name: Prepare local folders
@@ -25,6 +26,7 @@ jobs:
         path: c:\pub\hbreact
 
     - name: Start Website
+      shell: pwsh
       run: Start-IISSite -Name "HouseBids Website"
 
         
@@ -36,6 +38,7 @@ jobs:
 
     steps: 
     - name: Stop Website
+      shell: pwsh
       run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
 
     - name: Prepare local folders
@@ -52,5 +55,6 @@ jobs:
         path: \\WIN2019DC03\c$\pub\hbreact
 
     - name: Start Website
+      shell: pwsh
       run: Start-IISSite -Name "HouseBids Website"
  

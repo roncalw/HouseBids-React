@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.16.0]
+        node-version: [20.13.1]
 
     steps:
       - name: Download Code from Repository
@@ -30,7 +30,7 @@ jobs:
         run: npm run build
       
       - name: Share Artifact Inside Workflow
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: artifacts
           path: build

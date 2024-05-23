@@ -9,6 +9,7 @@ jobs:
 
     steps: 
     - name: Stop IIS website
+      shell: pwsh
       uses: actions/github-script@v4
       with:
         script: |

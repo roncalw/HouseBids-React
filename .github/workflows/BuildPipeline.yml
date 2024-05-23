@@ -30,7 +30,7 @@ jobs:
         run: npm run build
       
       - name: Share Artifact Inside Workflow
-        uses: actions/upload-artifact@v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: hbreact
           path: build

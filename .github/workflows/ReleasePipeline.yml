@@ -21,7 +21,7 @@ jobs:
         md c:\pub\hbreact
 
     - name: Download artifact
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v4
       with:
         name: hbreact
         path: c:\pub\hbreact
@@ -50,7 +50,7 @@ jobs:
         md \\WIN2019DC03\c$\pub\hbreact
 
     - name: Download artifact
-      uses: actions/download-artifact@v4.1.7
+      uses: actions/download-artifact@v4
       with:
         name: hbreact
         path: \\WIN2019DC03\c$\pub\hbreact

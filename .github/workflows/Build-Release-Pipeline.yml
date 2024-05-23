@@ -1,0 +1,91 @@
+name: Build Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.13.1]
+
+    steps:
+      - name: Download Code from Repository
+        uses: actions/checkout@v4.1.5
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Install NPM for Build
+        run: npm install
+      
+      - name: Run NPM Build
+        run: npm run build
+      
+      - name: Share Artifact Inside Workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: hbreact
+          path: build
+
+  deploy_local:
+    needs: build
+    runs-on: self-hosted
+
+    steps: 
+    - name: Stop Website
+      shell: pwsh
+      # Note: Had to import the IIS module to make this work on my machine ... Import-Module IISAdministration ... had to do this because the default powershell on my computer is version 7
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
+
+    - name: Prepare local folders
+      run: |       
+        Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren c:\pub\hbreact hbreact_bak
+        md c:\pub\hbreact
+
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: hbreact
+        path: c:\pub\hbreact
+
+    - name: Start Website
+      shell: pwsh
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
+
+        
+  deploy_remote:
+    needs: deploy_local
+    runs-on: self-hosted
+    environment:
+      name: IIS_Environment.Prod
+
+    steps: 
+    - name: Stop Website
+      shell: pwsh
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
+
+    - name: Prepare local folders
+      run: |       
+        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren \\WIN2019DC03\c$\pub\hbreact hbreact_bak
+        md \\WIN2019DC03\c$\pub\hbreact
+
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: hbreact
+        path: \\WIN2019DC03\c$\pub\hbreact
+
+    - name: Start Website
+      shell: pwsh
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
+ 

@@ -24,7 +24,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: hbreact
-        path: c:\pub\hbreact
+        #path: c:\pub\hbreact
         run-id: 9215134961
 
     - name: Start Website

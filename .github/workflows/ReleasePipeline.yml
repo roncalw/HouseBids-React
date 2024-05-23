@@ -8,10 +8,18 @@ jobs:
     runs-on: self-hosted
 
     steps: 
-    - name: Stop Website
-      shell: pwsh
-      # Note: Had to import the IIS module to make this work on my machine ... Import-Module IISAdministration ... had to do this because the default powershell on my computer is version 7
-      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
+    - name: Stop IIS website
+      uses: actions/github-script@v4
+      with:
+        script: |
+          # Ensure the IIS module is imported
+          if (-not (Get-Module -Name IISAdministration -ListAvailable)) {
+              Import-Module IISAdministration
+          }
+
+          # Stop the IIS site
+          Stop-IISSite -Name 'HouseBids Website' -Confirm:$false
+
 
     - name: Prepare local folders
       run: |       

@@ -8,19 +8,10 @@ jobs:
     runs-on: self-hosted
 
     steps: 
-    - name: Stop IIS website
+    - name: Stop Website
       shell: pwsh
-      uses: actions/github-script@v4
-      with:
-        script: |
-          # Ensure the IIS module is imported
-          if (-not (Get-Module -Name IISAdministration -ListAvailable)) {
-              Import-Module IISAdministration
-          }
-
-          # Stop the IIS site
-          Stop-IISSite -Name 'HouseBids Website' -Confirm:$false
-
+      # Note: Had to import the IIS module to make this work on my machine ... Import-Module IISAdministration ... had to do this because the default powershell on my computer is version 7
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
 
     - name: Prepare local folders
       run: |       
@@ -37,7 +28,7 @@ jobs:
 
     - name: Start Website
       shell: pwsh
-      run: Start-IISSite -Name "HouseBids Website"
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
 
         
   deploy_remote:
@@ -49,7 +40,7 @@ jobs:
     steps: 
     - name: Stop Website
       shell: pwsh
-      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
 
     - name: Prepare local folders
       run: |       
@@ -66,5 +57,5 @@ jobs:
 
     - name: Start Website
       shell: pwsh
-      run: Start-IISSite -Name "HouseBids Website"
+      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
  

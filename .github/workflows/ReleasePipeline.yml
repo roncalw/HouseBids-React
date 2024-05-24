@@ -5,59 +5,79 @@ on:
 
 jobs:
   deploy_local:
-    runs-on: self-hosted
+    runs-on: hpzbookg9
 
-    steps: 
+    steps:
     - name: Stop Website
-      shell: pwsh
-      # Note: Had to import the IIS module to make this work on my machine ... Import-Module IISAdministration ... had to do this because the default powershell on my computer is version 7
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
+      run: |
+        # Stop the IIS website
+        C:\Windows\System32\inetsrv\appcmd stop site /site.name:"HouseBids Website"
 
     - name: Prepare local folders
-      run: |       
+      run: |
         Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
         Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
         ren c:\pub\hbreact hbreact_bak
         md c:\pub\hbreact
 
-    - name: Download artifact
-      uses: actions/download-artifact@v4
+    - name: Download Release Asset
+      uses: actions/download-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: hbreact
-        #path: c:\pub\hbreact
-        #run-id: 9215134961
+        owner: your-github-username
+        repo: your-repo-name
+        tag: v1.0.0
+        name: build.zip
+        path: c:\pub\hbreact
+
+    - name: Unzip Artifact
+      shell: cmd
+      run: |
+        tar -xf c:\pub\hbreact\build.zip -C c:\pub\hbreact
 
     - name: Start Website
-      shell: pwsh
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
+      run: |
+        # Start the IIS website
+        C:\Windows\System32\inetsrv\appcmd start site /site.name:"HouseBids Website"
 
-        
   deploy_remote:
     needs: deploy_local
-    runs-on: self-hosted
+    runs-on: win2019dc03
     environment:
       name: IIS_Environment.Prod
 
-    steps: 
+    steps:
     - name: Stop Website
-      shell: pwsh
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
+      run: |
+        # Stop the IIS website
+        C:\Windows\System32\inetsrv\appcmd stop site /site.name:"HouseBids Website"
 
     - name: Prepare local folders
-      run: |       
-        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
-        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak' -Recurse -ErrorAction Ignore
-        ren \\WIN2019DC03\c$\pub\hbreact hbreact_bak
-        md \\WIN2019DC03\c$\pub\hbreact
+      run: |
+        Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren c:\pub\hbreact hbreact_bak
+        md c:\pub\hbreact
 
-    - name: Download artifact
-      uses: actions/download-artifact@v4
+    - name: Download Release Asset
+      uses: actions/download-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: hbreact
-        path: \\WIN2019DC03\c$\pub\hbreact
-        run-id: 9215134961
+        owner: your-github-username
+        repo: your-repo-name
+        tag: v1.0.0
+        name: build.zip
+        path: c:\pub\hbreact
+
+    - name: Unzip Artifact
+      shell: cmd
+      run: |
+        tar -xf c:\pub\hbreact\build.zip -C c:\pub\hbreact
 
     - name: Start Website
-      shell: pwsh
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
- 
+      run: |
+        # Start the IIS website
+        C:\Windows\System32\inetsrv\appcmd start site /site.name:"HouseBids Website"
+

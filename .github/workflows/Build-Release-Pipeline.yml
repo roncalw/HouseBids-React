@@ -70,7 +70,7 @@ jobs:
     steps: 
     - name: Stop Website
       shell: pwsh
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
+      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
 
     - name: Prepare local folders
       run: |       
@@ -87,5 +87,5 @@ jobs:
 
     - name: Start Website
       shell: pwsh
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Start-IISSite -Name 'HouseBids Website'`"" -Verb RunAs -WindowStyle Hidden
+      run: Start-IISSite -Name "HouseBids Website"
  

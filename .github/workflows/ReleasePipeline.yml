@@ -30,6 +30,8 @@ jobs:
       run: |
           Expand-Archive -Path 'c:\pub\hbreact\build.zip' -DestinationPath 'c:\pub\hbreact'
           Move-Item -Path 'c:\pub\hbreact\build\*' -Destination 'c:\pub\hbreact' -Force -Verbose
+          Remove-Item -Path 'c:\pub\hbreact\build' -Force -Recurse -Verbose
+          Remove-Item -Path 'c:\pub\hbreact\build.zip' -Force -Verbose
 
     - name: Start Website
       run: |
@@ -56,20 +58,17 @@ jobs:
         md c:\pub\hbreact
 
     - name: Download Release Asset
-      uses: actions/download-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        owner: roncalw
-        repo: roncalw/HouseBids-React
-        tag: v1.0.0
-        name: build.zip
-        path: c:\pub\hbreact
-
-    - name: Unzip Artifact
-      shell: cmd
       run: |
-        tar -xf c:\pub\hbreact\build.zip -C c:\pub\hbreact
+        $url = (Invoke-RestMethod -Uri "https://api.github.com/repos/roncalw/HouseBids-React/releases/tags/v1.0.0").assets | Where-Object { $_.name -eq "build.zip" } | Select-Object -ExpandProperty browser_download_url
+        Invoke-WebRequest -Uri $url -Headers @{Authorization = "token $env:GITHUB_TOKEN"} -OutFile "c:\pub\hbreact\build.zip"
+        
+    - name: Unzip Artifact and Copy Contents
+      shell: powershell
+      run: |
+          Expand-Archive -Path 'c:\pub\hbreact\build.zip' -DestinationPath 'c:\pub\hbreact'
+          Move-Item -Path 'c:\pub\hbreact\build\*' -Destination 'c:\pub\hbreact' -Force -Verbose
+          Remove-Item -Path 'c:\pub\hbreact\build' -Force -Recurse -Verbose
+          Remove-Item -Path 'c:\pub\hbreact\build.zip' -Force -Verbose
 
     - name: Start Website
       run: |

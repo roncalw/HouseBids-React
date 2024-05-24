@@ -35,7 +35,7 @@ jobs:
 
   deploy_local:
     needs: build
-    runs-on: self-hosted
+    runs-on: hpzbookg9
 
     steps: 
     - name: Stop Website
@@ -63,7 +63,7 @@ jobs:
         
   deploy_remote:
     needs: deploy_local
-    runs-on: self-hosted
+    runs-on: win2019dc03
     environment:
       name: IIS_Environment.Prod
 
@@ -74,16 +74,16 @@ jobs:
 
     - name: Prepare local folders
       run: |       
-        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
-        Remove-Item '\\WIN2019DC03\c$\pub\hbreact_bak' -Recurse -ErrorAction Ignore
-        ren \\WIN2019DC03\c$\pub\hbreact hbreact_bak
-        md \\WIN2019DC03\c$\pub\hbreact
+        Remove-Item 'c:\pub\hbreact_bak1' -Recurse -ErrorAction Ignore
+        Remove-Item 'c:\pub\hbreact_bak' -Recurse -ErrorAction Ignore
+        ren c:\pub\hbreact hbreact_bak
+        md c:\pub\hbreact
 
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: hbreact
-        path: \\WIN2019DC03\c$\pub\hbreact
+        path: c:\pub\hbreact
 
     - name: Start Website
       shell: pwsh

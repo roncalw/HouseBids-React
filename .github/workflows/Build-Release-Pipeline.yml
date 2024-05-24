@@ -41,7 +41,7 @@ jobs:
     - name: Stop Website
       run: |
         # Stop the IIS website
-        iisreset /stop "HouseBids Website"
+        iisreset /stop "HouseBids Website" || echo "Ignoring error and continuing..."
 
     - name: Prepare local folders
       run: |       

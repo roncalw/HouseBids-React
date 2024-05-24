@@ -23,7 +23,7 @@ jobs:
     - name: Download Release Asset
       run: |
         $url = (Invoke-RestMethod -Uri "https://api.github.com/repos/roncalw/HouseBids-React/releases/tags/v1.0.0").assets | Where-Object { $_.name -eq "build.zip" } | Select-Object -ExpandProperty browser_download_url
-        Invoke-WebRequest -Uri $url -Headers @{Authorization = "token $env:GITHUB_TOKEN"} -OutFile "$HOME\Downloads\build.zip"
+        Invoke-WebRequest -Uri $url -Headers @{Authorization = "token $env:GITHUB_TOKEN"} -OutFile "c:\pub\hbreact\build.zip"
     
     - name: Unzip Artifact
       shell: cmd

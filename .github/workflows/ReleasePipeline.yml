@@ -26,7 +26,7 @@ jobs:
         -H "Accept: application/octet-stream" \
         -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
         "$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s https://api.github.com/repos/roncalw/HouseBids-React/releases/tags/v1.0.0 | jq -r '.assets[] | select(.name == "build.zip") | .url')"
-        --output c:\pub\hbreact\build.zip
+        --output "c:\pub\hbreact\build.zip"
 
     - name: Unzip Artifact
       shell: cmd

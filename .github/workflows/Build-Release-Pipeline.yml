@@ -39,9 +39,9 @@ jobs:
 
     steps: 
     - name: Stop Website
-      shell: pwsh
-      # Note: Had to import the IIS module to make this work on my machine ... Import-Module IISAdministration ... had to do this because the default powershell on my computer is version 7
-      run: Start-Process -FilePath powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"Stop-IISSite -Name 'HouseBids Website' -Confirm:`$false`"" -Verb RunAs -WindowStyle Hidden
+      run: |
+        # Stop the IIS website
+        iisreset /stop "HouseBids Website"
 
     - name: Prepare local folders
       run: |       
@@ -71,7 +71,7 @@ jobs:
     - name: Stop Website
       run: |
         # Stop the IIS website
-        iisreset /stop
+        iisreset /stop "HouseBids Website"
 
     - name: Prepare local folders
       run: |       
@@ -89,5 +89,5 @@ jobs:
     - name: Start Website
       run: |
         # Start the IIS website
-        iisreset /start
+        iisreset /start "HouseBids Website"
  

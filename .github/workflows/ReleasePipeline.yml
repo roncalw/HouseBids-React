@@ -22,12 +22,9 @@ jobs:
 
     - name: Download Release Asset
       run: |
-        curl -L \
-        -H "Accept: application/octet-stream" \
-        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-        "$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s https://api.github.com/repos/roncalw/HouseBids-React/releases/tags/v1.0.0 | jq -r '.assets[] | select(.name == "build.zip") | .url')"
-        --output "c:\pub\hbreact\build.zip"
-
+        $url = (Invoke-RestMethod -Uri "https://api.github.com/repos/roncalw/HouseBids-React/releases/tags/v1.0.0").assets | Where-Object { $_.name -eq "build.zip" } | Select-Object -ExpandProperty browser_download_url
+        Invoke-WebRequest -Uri $url -Headers @{Authorization = "token $env:GITHUB_TOKEN"} -OutFile "$HOME\Downloads\build.zip"
+    
     - name: Unzip Artifact
       shell: cmd
       run: |

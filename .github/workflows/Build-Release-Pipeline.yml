@@ -69,8 +69,9 @@ jobs:
 
     steps: 
     - name: Stop Website
-      shell: pwsh
-      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
+      run: |
+        # Stop the IIS website
+        iisreset /stop
 
     - name: Prepare local folders
       run: |       
@@ -86,6 +87,7 @@ jobs:
         path: c:\pub\hbreact
 
     - name: Start Website
-      shell: pwsh
-      run: Start-IISSite -Name "HouseBids Website"
+      run: |
+        # Start the IIS website
+        iisreset /start
  

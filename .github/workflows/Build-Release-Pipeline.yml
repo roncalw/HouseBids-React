@@ -68,9 +68,9 @@ jobs:
       name: IIS_Environment.Prod
 
     steps: 
-    # - name: Stop Website
-    #   shell: pwsh
-    #   run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
+    - name: Stop Website
+      shell: pwsh
+      run: Stop-IISSite -Name "HouseBids Website" -Confirm:$false
 
     - name: Prepare local folders
       run: |       
@@ -85,7 +85,7 @@ jobs:
         name: hbreact
         path: c:\pub\hbreact
 
-    # - name: Start Website
-    #   shell: pwsh
-    #   run: Start-IISSite -Name "HouseBids Website"
+    - name: Start Website
+      shell: pwsh
+      run: Start-IISSite -Name "HouseBids Website"
  

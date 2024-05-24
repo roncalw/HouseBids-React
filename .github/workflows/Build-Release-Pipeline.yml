@@ -41,7 +41,7 @@ jobs:
     - name: Stop Website
       run: |
         # Stop the IIS website
-        %windir%\system32\inetsrv\appcmd stop site /site.name:"HouseBids Website"
+        C:\Windows\System32\inetsrv\appcmd stop site /site.name:"HouseBids Website"
 
     - name: Prepare local folders
       run: |       
@@ -59,7 +59,7 @@ jobs:
     - name: Start Website
       run: |
         # Start the IIS website
-        %windir%\system32\inetsrv\appcmd start site /site.name:"HouseBids Website"
+        C:\Windows\System32\inetsrv\appcmd start site /site.name:"HouseBids Website"
 
         
   deploy_remote:
@@ -72,7 +72,7 @@ jobs:
     - name: Stop Website
       run: |
         # Stop the IIS website
-        %windir%\system32\inetsrv\appcmd stop site /site.name:"HouseBids Website"
+        C:\Windows\System32\inetsrv\appcmd stop site /site.name:"HouseBids Website"
 
     - name: Prepare local folders
       run: |       
@@ -90,5 +90,5 @@ jobs:
     - name: Start Website
       run: |
         # Start the IIS website
-        %windir%\system32\inetsrv\appcmd start site /site.name:"HouseBids Website"
+        C:\Windows\System32\inetsrv\appcmd start site /site.name:"HouseBids Website"
  

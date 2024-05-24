@@ -21,15 +21,12 @@ jobs:
         md c:\pub\hbreact
 
     - name: Download Release Asset
-      uses: actions/download-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        owner: roncalw
-        repo: roncalw/HouseBids-React
-        tag: v1.0.0
-        name: build.zip
-        path: c:\pub\hbreact
+      run: |
+        curl -L \
+        -H "Accept: application/octet-stream" \
+        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        "$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s https://api.github.com/repos/roncalw/HouseBids-React/releases/tags/v1.0.0 | jq -r '.assets[] | select(.name == "build.zip") | .url')" \
+        --output c:\pub\hbreact\build.zip
 
     - name: Unzip Artifact
       shell: cmd
